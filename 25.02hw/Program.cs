@@ -195,15 +195,17 @@ namespace email_list_app
 
             try
             {
-                string sql = "SELECT * FROM promotions";
-                IEnumerable<promotion> promotions = _connection.Query<promotion>(sql);
+                string sql = @"SELECT p.id, p.section_id, p.promotion_name, p.country, p.start_date, p.end_date, s.section_name
+                               FROM promotions p
+                               INNER JOIN sections s ON p.section_id = s.id";
+                var promotions = _connection.Query(sql);
 
                 Console.WriteLine("\nAll promotions:");
                 foreach (var p in promotions)
                 {
-                    Console.WriteLine($"id: {p.id}, section_id: {p.section_id}, promotion_name: {p.promotion_name}, " +
-                                      $"country: {p.country}, start_date: {p.start_date.ToShortDateString()}, " +
-                                      $"end_date: {p.end_date.ToShortDateString()}");
+                    Console.WriteLine($"id: {p.id}, promotion: {p.promotion_name}, section: {p.section_name}, " +
+                                      $"country: {p.country}, start_date: {((DateTime)p.start_date).ToShortDateString()}, " +
+                                      $"end_date: {((DateTime)p.end_date).ToShortDateString()}");
                 }
             }
             catch (Exception ex)
@@ -218,13 +220,13 @@ namespace email_list_app
 
             try
             {
-                string sql = "SELECT DISTINCT city FROM customers";
-                IEnumerable<string> cities = _connection.Query<string>(sql);
+                string sql = "SELECT DISTINCT city, country FROM customers";
+                var cities = _connection.Query(sql);
 
-                Console.WriteLine("\nAll cities:");
-                foreach (var city in cities)
+                Console.WriteLine("\nAll cities (with country):");
+                foreach (var c in cities)
                 {
-                    Console.WriteLine(city);
+                    Console.WriteLine($"City: {c.city}  |  Country: {c.country}");
                 }
             }
             catch (Exception ex)
@@ -270,7 +272,7 @@ namespace email_list_app
                 Console.WriteLine($"\nCustomers from {city}:");
                 foreach (var c in customers)
                 {
-                    Console.WriteLine($"id: {c.id}, name: {c.full_name}, email: {c.email}");
+                    Console.WriteLine($"id: {c.id}, name: {c.full_name}, email: {c.email}, country: {c.country}");
                 }
             }
             catch (Exception ex)
@@ -295,7 +297,7 @@ namespace email_list_app
                 Console.WriteLine($"\nCustomers from {country}:");
                 foreach (var c in customers)
                 {
-                    Console.WriteLine($"id: {c.id}, name: {c.full_name}, email: {c.email}");
+                    Console.WriteLine($"id: {c.id}, name: {c.full_name}, email: {c.email}, city: {c.city}");
                 }
             }
             catch (Exception ex)

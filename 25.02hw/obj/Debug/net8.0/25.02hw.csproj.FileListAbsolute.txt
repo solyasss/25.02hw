@@ -34,3 +34,4 @@ D:\25.02hw\25.02hw\obj\Debug\net8.0\25.02hw.pdb
 D:\25.02hw\25.02hw\obj\Debug\net8.0\25.02hw.genruntimeconfig.cache
 D:\25.02hw\25.02hw\obj\Debug\net8.0\ref\25.02hw.dll
 D:\25.02hw\25.02hw\bin\Debug\net8.0\appsettings.json
+D:\25.02hw\25.02hw\obj\Debug\net8.0\25.02hw.sourcelink.json
